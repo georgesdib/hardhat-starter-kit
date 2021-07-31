@@ -1,9 +1,12 @@
-pragma solidity ^0.6.6;
+// "SPDX-License-Identifier: UNLICENSED"
+pragma solidity ^0.8.6;
 
-import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
-import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
+import "@chainlink/contracts/src/v0.8/dev/ChainlinkClient.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract APIConsumer is ChainlinkClient, Ownable {
+
+    using Chainlink for Chainlink.Request;
 
     uint256 public volume;
 
@@ -17,7 +20,7 @@ contract APIConsumer is ChainlinkClient, Ownable {
      * Job ID: 29fa9aa13bf1468788b7cc4a500a45b8
      * Fee: 0.1 LINK
      */
-    constructor(address _oracle, string memory _jobId, uint256 _fee, address _link) public {
+    constructor(address _oracle, string memory _jobId, uint256 _fee, address _link) {
         if (_link == address(0)) {
             setPublicChainlinkToken();
         } else {

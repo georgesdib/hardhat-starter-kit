@@ -1,6 +1,7 @@
-pragma solidity 0.6.6;
+// "SPDX-License-Identifier: UNLICENSED"
+pragma solidity 0.8.6;
 
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/dev/VRFConsumerBase.sol";
 contract RandomNumberConsumer is VRFConsumerBase {
 
     bytes32 internal keyHash;
@@ -23,7 +24,7 @@ contract RandomNumberConsumer is VRFConsumerBase {
         VRFConsumerBase(
             _vrfCoordinator, // VRF Coordinator
             _link  // LINK Token
-        ) public
+        )
     {
         keyHash = _keyHash;
         fee = _fee;

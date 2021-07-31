@@ -1,5 +1,5 @@
 import { task } from "hardhat/config";
-import { networkConfig, getNetworkIdFromName, getNetworkMember } from '../helper-hardhat-config';
+import { getNetworkIdFromName, getNetworkMember } from '../helper-hardhat-config';
 
 task("fund-link", "Funds a contract with LINK")
     .addParam("contract", "The address of the contract that requires LINK")

@@ -12,7 +12,7 @@ contract LinkToken is ERC20 {
   string private constant NAME = 'ChainLink Token';
   string private constant SYMBOL = 'LINK';
 
-  event Transfer(address indexed from, address indexed to, uint value, bytes data);
+  event TransferToken(address indexed from, address indexed to, uint value, bytes data);
 
   constructor() ERC20(NAME, SYMBOL) {
     _onCreate();
@@ -95,7 +95,7 @@ contract LinkToken is ERC20 {
     returns (bool success)
   {
     super.transfer(_to, _value);
-    emit Transfer(msg.sender, _to, _value, _data);
+    emit TransferToken(msg.sender, _to, _value, _data);
     if (isContract(_to)) {
       contractFallback(_to, _value, _data);
     }

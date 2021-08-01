@@ -21,7 +21,7 @@ task("fund-link", "Funds a contract with LINK")
 
         //Create connection to LINK token contract and initiate the transfer
         const linkTokenContract = new hre.ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
-        var transferTransaction = await linkTokenContract.transfer(contractAddr, fundAmount)
+        let transferTransaction = await linkTokenContract.transfer(contractAddr, fundAmount)
         transferTransaction.wait(1)
         console.log('Contract ' + contractAddr + ' funded with ' + fundAmount / Math.pow(10, 18) + ' LINK. Transaction Hash: ' + transferTransaction.hash)
 

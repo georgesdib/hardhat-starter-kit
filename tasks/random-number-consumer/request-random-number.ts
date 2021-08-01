@@ -31,7 +31,7 @@ task(
       RandomNumberConsumer.interface,
       signer
     );
-    var result = await vrfConsumerContract.getRandomNumber();
+    let result = await vrfConsumerContract.getRandomNumber();
     console.log(
       "Contract ",
       contractAddr,

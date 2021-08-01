@@ -1,29 +1,30 @@
-const {
-  networkConfig,
+import {
   autoFundCheck,
   developmentChains,
-} = require("../../helper-hardhat-config");
-const skipIf = require("mocha-skip-if");
-const chai = require("chai");
-const { expect } = require("chai");
+  getNetworkMember,
+} from "../../helper-hardhat-config";
+const skip = require("mocha-skip-if");
+import chai from "chai";
+import { expect } from "chai";
 const BN = require("bn.js");
-const { getChainId } = require("hardhat");
+import { getChainId, network, deployments, ethers } from "hardhat";
+const hre = require("hardhat");
 chai.use(require("chai-bn")(BN));
 
 skip
   .if(!developmentChains.includes(network.name))
   .describe("APIConsumer Unit Tests", async function () {
-    let apiConsumer, linkToken;
+    let apiConsumer: any, linkToken: any;
 
     beforeEach(async () => {
       const chainId = await getChainId();
       await deployments.fixture(["mocks", "api"]);
       const LinkToken = await deployments.get("LinkToken");
       linkToken = await ethers.getContractAt("LinkToken", LinkToken.address);
-      const networkName = networkConfig[chainId]["name"];
+      const networkName = await getNetworkMember(chainId, "name");
 
-      linkTokenAddress = linkToken.address;
-      additionalMessage = " --linkaddress " + linkTokenAddress;
+      let linkTokenAddress = linkToken.address;
+      let additionalMessage = " --linkaddress " + linkTokenAddress;
 
       const APIConsumer = await deployments.get("APIConsumer");
       apiConsumer = await ethers.getContractAt(

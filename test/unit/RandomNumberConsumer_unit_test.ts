@@ -1,28 +1,32 @@
-const {
-  networkConfig,
+import {
+  getNetworkMember,
   autoFundCheck,
   developmentChains,
-} = require("../../helper-hardhat-config");
-const skipIf = require("mocha-skip-if");
-const chai = require("chai");
-const { expect } = require("chai");
+} from "../../helper-hardhat-config";
+const skip = require("mocha-skip-if");
+import chai from "chai";
+import { expect } from "chai";
 const BN = require("bn.js");
-chai.use(require("chai-bn")(BN));
+import bignumber from "chai-bn";
+chai.use(bignumber(BN));
+
+import { deployments, network, ethers, getChainId } from "hardhat";
+const hre = require("hardhat");
 
 skip
   .if(!developmentChains.includes(network.name))
   .describe("RandomNumberConsumer Unit Tests", async function () {
-    let randomNumberConsumer;
+    let randomNumberConsumer: any;
 
     beforeEach(async () => {
       const chainId = await getChainId();
       await deployments.fixture(["mocks", "vrf"]);
       const LinkToken = await deployments.get("LinkToken");
-      linkToken = await ethers.getContractAt("LinkToken", LinkToken.address);
-      const networkName = networkConfig[chainId]["name"];
+      const linkToken = await ethers.getContractAt("LinkToken", LinkToken.address);
+      const networkName = await getNetworkMember(chainId, "name");
 
-      linkTokenAddress = linkToken.address;
-      additionalMessage = " --linkaddress " + linkTokenAddress;
+      const linkTokenAddress = linkToken.address;
+      const additionalMessage = " --linkaddress " + linkTokenAddress;
 
       const RandomNumberConsumer = await deployments.get(
         "RandomNumberConsumer"

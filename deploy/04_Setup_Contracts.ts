@@ -1,24 +1,27 @@
-const { networkConfig, autoFundCheck } = require("../helper-hardhat-config");
-const { ethers, getNamedAccounts } = require("hardhat");
+import { getNetworkMember, autoFundCheck } from "../helper-hardhat-config";
+import { ethers, deployments, getChainId } from "hardhat";
+const hre = require("hardhat");
 
-module.exports = async ({ getNamedAccounts, deployments }) => {
-  const { deploy, log, get } = deployments;
+module.exports = async () => {
+  const { log, get } = deployments;
   const chainId = await getChainId();
-  let linkTokenAddress;
+
+  let linkTokenAddress: string, oracle: string;
   let additionalMessage = "";
+  let linkToken: any, MockOracle: any;
   //set log level to ignore non errors
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
-  const networkName = networkConfig[chainId]["name"];
+  const networkName = await getNetworkMember(chainId, "name");
 
-  if (chainId == 31337) {
+  if (chainId == "31337") {
     linkToken = await get("LinkToken");
     MockOracle = await get("MockOracle");
     linkTokenAddress = linkToken.address;
     oracle = MockOracle.address;
     additionalMessage = " --linkaddress " + linkTokenAddress;
   } else {
-    linkTokenAddress = networkConfig[chainId]["linkToken"];
-    oracle = networkConfig[chainId]["oracle"];
+    linkTokenAddress = await getNetworkMember(chainId, "linkToken");
+    oracle = await getNetworkMember(chainId, "oracle");
   }
 
   //Try Auto-fund APIConsumer contract with LINK

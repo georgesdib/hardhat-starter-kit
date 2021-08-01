@@ -53,6 +53,8 @@ export default {
                 mnemonic: MNEMONIC,
             },
             saveDeployments: true,
+            gas: 4500000,        // rinkeby has a lower block limit than mainnet
+            gasPrice: 10000000000,
         },
         ganache: {
             url: 'http://localhost:8545',

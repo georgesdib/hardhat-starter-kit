@@ -22,7 +22,7 @@
     "chai-bn": "^0.2.1",
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.24",
-    "hardhat": "^2.0.6",
+    "hardhat": "^2.12.5",
     "hardhat-deploy": "^0.7.0-beta.39",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5",
